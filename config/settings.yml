@@ -1,0 +1,26 @@
+language:
+  default: en
+
+db:
+  url: mongodb://localhost:27017
+  name: yql
+
+pagination:
+  results: 20
+
+access:
+  model: user
+  identifier: email
+  dev:
+    - dev@fugroup.net
+  admin:
+    - admin@fugroup.net
+  super:
+    - super@fugroup.net
+
+upload:
+  amazon:
+    cdn: https://s3.amazonaws.com
+    key: yourkey
+    secret: yoursecret
+    bucket: hello

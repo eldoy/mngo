@@ -1,0 +1,20 @@
+{
+  "name": "mngo",
+  "version": "0.0.1",
+  "description": "MongoDB lib with support for events",
+  "main": "mngo.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "author": "Vidar",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^23.5.0"
+  },
+  "dependencies": {
+    "mongodb": "^3.1.3"
+  }
+}

@@ -1,0 +1,22 @@
+meta:
+  name: task
+  description: The task model
+
+fields:
+  _id:
+    desc: Unique id
+    type: objectid
+    read: any
+    write: app
+
+  owned_read:
+    desc: Task owned
+    type: string
+    read: owner
+    write: any
+
+  owned_write:
+    desc: Task owned
+    type: string
+    read: any
+    write: owner
