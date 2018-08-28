@@ -1,4 +1,5 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
+
 const Events = require('events')
 const URL = 'mongodb://localhost:27017'
 const NAME = 'yql'
@@ -11,6 +12,10 @@ class EventEmitter extends Events {}
 let events = new EventEmitter()
 
 const mongo = {}
+
+mongo.id = function (_id) {
+  return ObjectId(_id)
+}
 
 mongo.on = function (event, fn) {
   events.on(event, fn)
