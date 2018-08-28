@@ -14,7 +14,11 @@ let events = new EventEmitter()
 const mongo = {}
 
 mongo.id = function (_id) {
-  return ObjectId(_id)
+  try {
+    return ObjectId(_id)
+  } catch (e) {
+    return ObjectId()
+  }
 }
 
 mongo.on = function (event, fn) {

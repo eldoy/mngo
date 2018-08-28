@@ -1,11 +1,12 @@
 const { before, yql, log, db } = require('./setup.jest.js')
-const mngo = require('../mngo')
+const mongo = require('../mngo')
+const { ObjectId } = require('mongodb')
 let $db, action, model, data
 
 beforeAll(async (done) => {
-  $db = await mngo.connect()
+  $db = await mongo.connect()
   done()
-  mngo.on('change', (a, m, d) => {
+  mongo.on('change', (a, m, d) => {
     action = a
     model = m
     data = d
@@ -20,6 +21,17 @@ describe('Mongo', () => {
   /**
   * MONGO
   **/
+
+  it('should create mongodb object ids', () => {
+    let id = mongo.id()
+    expect(id.constructor).toEqual(ObjectId)
+    id = mongo.id('test')
+    expect(id.constructor).toEqual(ObjectId)
+    const t = '5b852d75cf0aeb856bdb56ef'
+    id = mongo.id(t)
+    expect(id.constructor).toEqual(ObjectId)
+    expect(id.toString()).toEqual(t)
+  })
 
   it('should insert an object', async () => {
     const project = await $db('project').insert({ name: 'baner' })

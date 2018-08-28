@@ -1,6 +1,6 @@
 {
   "name": "mngo",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "MongoDB lib with support for events",
   "main": "mngo.js",
   "directories": {
