@@ -58,7 +58,9 @@ mongo.insert = async function (set, options = {}) {
 }
 
 mongo.update = async function (get, set, options = {}) {
-  await db.updateOne(get, { $set: set })
+  if (Object.keys(set).length > 0) {
+    await db.updateOne(get, { $set: set })
+  }
   const doc = await db.findOne(get, options)
   events.emit('change', 'update', model, doc)
   return doc

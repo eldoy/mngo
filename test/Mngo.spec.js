@@ -50,6 +50,12 @@ describe('Mongo', () => {
 
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('update')
+
+    project = await $db('project').update(
+      { _id: project._id }, {}
+    )
+    expect(project._id).toBeDefined()
+    expect(project.name).toEqual('update')
   })
 
   it('should delete an object', async () => {
