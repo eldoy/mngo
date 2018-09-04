@@ -1,5 +1,5 @@
 # MNGO Evented MongoDB database client
-A thin layer on top of the native mongodb driver with support for events. Simplifies the API and connection handling too.
+A thin layer on top of the native mongodb driver with support for events. Updates, inserts and deletes can be subsribed to for use with web sockets. Simplifies the API and connection handling too. Any changes returns the full document.
 
 ### INSTALL
 ```npm i mngo``` or ```yarn add mngo```
@@ -31,6 +31,9 @@ await db.project.findOne({ name: 'hello' })
 
 // Find many
 await db.project.find({ name: 'hello' })
+
+// Delete
+await db.project.delete({ name: 'hello' })
 
 // Object ID
 db.id()          // Returns new object id
