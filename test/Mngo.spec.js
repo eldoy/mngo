@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb')
 let $db, action, model, data
 
 beforeAll(async (done) => {
-  $db = await mongo.connection()
+  $db = await mongo.connect()
   done()
   $db.on('change', (a, m, d) => {
     action = a

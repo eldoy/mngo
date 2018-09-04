@@ -11,7 +11,7 @@ Any changes returns the full document. You can change the database name for a co
 
 const mongo = require('mngo')
 
-const db = await mongo.connection(
+const db = await mongo.connect(
   {
     url: 'mongodb://localhost:27017',
     name: 'mngo'
