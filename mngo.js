@@ -1,12 +1,15 @@
-const { MongoClient, ObjectId } = require('mongodb')
-
+const { ObjectId } = require('mongodb')
+const Connection = require('./lib/connection.js')
+const Pool = require('./lib/pool.js')
 const Events = require('events')
-const URL = 'mongodb://localhost:27017'
-const NAME = 'yql'
-let client
+const DEFAULT_URL = 'mongodb://localhost:27017'
+const DEFAULT_NAME = 'yql'
+
 let database
 let db
 let model
+
+const pool = new Pool()
 
 class EventEmitter extends Events {}
 let events = new EventEmitter()
@@ -30,9 +33,9 @@ mongo.emit = function (event, data = {}) {
 }
 
 // Connect to db
-mongo.connect = async function (conf = {}) {
-  client = await MongoClient.connect(conf.url || URL)
-  database = client.db(conf.name || NAME)
+mongo.connect = async function (config = {}, options = {}) {
+  const connection = new Connection(config, options)
+  database = await connection.init()
   return mongo.collection
 }
 
