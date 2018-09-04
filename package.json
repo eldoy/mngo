@@ -2,7 +2,7 @@
   "name": "mngo",
   "version": "0.0.5",
   "description": "MongoDB lib with support for events",
-  "main": "mngo.js",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
