@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb')
 let $db, action, model, data
 
 beforeAll(async (done) => {
-  $db = await mongo.connect()
+  $db = await mongo.connection()
   done()
   $db.on('change', (a, m, d) => {
     action = a
@@ -31,6 +31,20 @@ describe('Mongo', () => {
     id = $db.id(t)
     expect(id.constructor).toEqual(ObjectId)
     expect(id.toString()).toEqual(t)
+  })
+
+  it('should change databases', async () => {
+    $db.setDatabase('mngotest')
+    let project = await $db.project.insert({ name: 'baner' })
+    expect(project._id).toBeDefined()
+    expect(project.name).toEqual('baner')
+    project = await $db.project.findOne({ name: 'baner' })
+    expect(project._id).toBeDefined()
+    expect(project.name).toEqual('baner')
+    project = await $db.project.delete({ name: 'baner' })
+    project = await $db.project.findOne({ name: 'baner' })
+    expect(project).toBeNull()
+    $db.setDatabase('mngo')
   })
 
   it('should insert an object', async () => {

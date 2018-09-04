@@ -3,7 +3,7 @@ language:
 
 db:
   url: mongodb://localhost:27017
-  name: yql
+  name: mngo
 
 pagination:
   results: 20

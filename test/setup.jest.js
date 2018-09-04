@@ -5,7 +5,7 @@ const mongo = () => {
     poolSize: 100
   })
 }
-mongo().then((client) => { db = client.db('yql') })
+mongo().then((client) => { db = client.db('mngo') })
 
 // Clear out the db before each run
 const before = (done) => {

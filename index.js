@@ -2,7 +2,7 @@ const Connection = require('./lib/connection.js')
 const mongo = {}
 
 // Connect to db
-mongo.connect = async (config = {}, options = {}) => {
+mongo.connection = async (config = {}, options = {}) => {
   const connection = new Connection(config, options)
   await connection.init()
   return new Proxy(connection, {
