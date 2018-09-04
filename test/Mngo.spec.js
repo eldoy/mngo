@@ -33,7 +33,7 @@ describe('Mongo', () => {
     expect(id.toString()).toEqual(t)
   })
 
-  it('should change databases', async () => {
+  it('should change databases on connection', async () => {
     $db.setDatabase('mngotest')
     let project = await $db.project.insert({ name: 'baner' })
     expect(project._id).toBeDefined()
@@ -45,6 +45,21 @@ describe('Mongo', () => {
     project = await $db.project.findOne({ name: 'baner' })
     expect(project).toBeNull()
     $db.setDatabase('mngo')
+  })
+
+  it('should change databases per collection', async () => {
+    let project = await $db.collection('project').insert({ name: 'baner' })
+    expect(project._id).toBeDefined()
+    expect(project.name).toEqual('baner')
+    let c = $db.collection('project', {
+      db: 'mngotest'
+    })
+    project = await c.insert({ name: 'baner' })
+    expect(project._id).toBeDefined()
+    project = await c.delete({ name: 'baner' })
+    expect(project._id).toBeDefined()
+    project = await c.findOne({ name: 'baner' })
+    expect(project).toBeNull()
   })
 
   it('should insert an object', async () => {

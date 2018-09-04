@@ -1,18 +1,20 @@
 const { MongoClient } = require('mongodb')
 let db
+let client
 const mongo = () => {
   return MongoClient.connect('mongodb://localhost:27017', {
     poolSize: 100
   })
 }
-mongo().then((client) => { db = client.db('mngo') })
+mongo().then((c) => { client = c })
 
 // Clear out the db before each run
 const before = (done) => {
   (async () => {
     // Drop db
     try {
-      await db.dropCollection('project')
+      await client.db('mngo').dropCollection('project')
+      await client.db('mngotest').dropCollection('project')
     } catch (err) {}
     done()
   })()
