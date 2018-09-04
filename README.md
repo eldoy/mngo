@@ -56,6 +56,9 @@ db.setDatabase('name')
 // Check connection status
 db.isConnected
 
+// Native mongodb client
+db.client
+
 // Register events
 db.on('change', (type, name, doc) => {
   console.log('Database changed!')
