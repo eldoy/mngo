@@ -1,20 +1,25 @@
-const { before, yql, log, db } = require('./setup.jest.js')
 const mongo = require('../index.js')
 const { ObjectId } = require('mongodb')
 let $db, action, model, data
 
-beforeAll(async (done) => {
+beforeAll(async () => {
   $db = await mongo.connect()
-  done()
   $db.on('change', (a, m, d) => {
     action = a
     model = m
     data = d
-    done()
   })
 })
 
-beforeEach(before)
+beforeEach(async () => {
+  for (const d of ['mngotest', 'mngo']) {
+    $db.setDatabase(d)
+    let projects = await $db.project.find()
+    for (const p of projects) {
+      await $db.project.delete({ _id: p._id })
+    }
+  }
+})
 
 describe('Mongo', () => {
 
