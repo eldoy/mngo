@@ -118,15 +118,14 @@ describe('Mongo', () => {
     expect(projects[1].name).toEqual('baner2')
   })
 
-  it('should support insert events', async (done) => {
+  it('should support insert events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
     expect(action).toEqual('insert')
     expect(model).toEqual('project')
     expect(data.name).toEqual('baner')
-    done()
   })
 
-  it('should support update events', async (done) => {
+  it('should support update events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
     project = await $db.project.update(
       { _id: project._id }, { name: 'update' }
@@ -134,15 +133,21 @@ describe('Mongo', () => {
     expect(action).toEqual('update')
     expect(model).toEqual('project')
     expect(data.name).toEqual('update')
-    done()
   })
 
-  it('should support delete events', async (done) => {
+  it('should support delete events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
     project = await $db.project.delete({ _id: project._id })
     expect(action).toEqual('delete')
     expect(model).toEqual('project')
     expect(data.name).toEqual('baner')
-    done()
+  })
+
+  it('should support get events', async () => {
+    let project = await $db.project.insert({ name: 'baner' })
+    project = await $db.project.get({ _id: project._id })
+    expect(action).toEqual('get')
+    expect(model).toEqual('project')
+    expect(data.name).toEqual('baner')
   })
 })
