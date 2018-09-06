@@ -60,12 +60,10 @@ db.isConnected
 // Native mongodb client
 db.client
 
-// Native mongodb database
-db.database
-
 // Register events
-db.on('change', (type, name, doc) => {
+mongo.on('change', (db, type, name, doc) => {
   console.log('Database changed!')
+  console.log(db)   // Name of database
   console.log(type) // Event type is either find, insert, update or delete
   console.log(name) // Name of collection
   console.log(doc)  // The new document data

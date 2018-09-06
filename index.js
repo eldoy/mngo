@@ -1,18 +1,24 @@
+const Events = require('events')
 const Connection = require('./lib/connection.js')
-const mongo = {}
 
-// Connect to db
-mongo.connect = async (config = {}, options = {}) => {
-  const connection = new Connection(config, options)
-  await connection.init()
-  return new Proxy(connection, {
-    get: function (obj, prop) {
-      if (!(prop in obj)) {
-        return obj.collection(prop)
+class Mongo extends Events {
+  constructor () {
+    super()
+  }
+
+  // Connect to db
+  async connect (config = {}, options = {}) {
+    const connection = new Connection(this, config, options)
+    await connection.init()
+    return new Proxy(connection, {
+      get: function (obj, prop) {
+        if (!(prop in obj)) {
+          return obj.collection(prop)
+        }
+        return obj[prop]
       }
-      return obj[prop]
-    }
-  })
+    })
+  }
 }
 
-module.exports = mongo
+module.exports = new Mongo()
