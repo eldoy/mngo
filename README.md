@@ -70,5 +70,12 @@ db.on('change', (type, name, doc) => {
   console.log(name) // Name of collection
   console.log(doc)  // The new document data
 })
+
+// Add an 'x' in front to also emit events
+await db.project.xfind()
+await db.project.xget()
+await db.project.xinsert()
+await db.project.xupdate()
+await db.project.xdelete()
 ```
 The connections are automatically pooled and re-used if possible. Enjoy!
