@@ -38,8 +38,8 @@ await db.project.insert({ name: 'hello' }, {}) // Last parameter is native mongo
 // Update
 await db.project.update({ name: 'hello' }, { name: 'newname' })
 
-// Find one, returns an single object or null
-await db.project.get({ name: 'hello' })
+// Find first match, returns an single object or null
+await db.project.first({ name: 'hello' })
 
 // Find many returns an array
 await db.project.find({ name: 'hello' })
@@ -66,16 +66,16 @@ db.database
 // Register events
 db.on('change', (type, name, doc) => {
   console.log('Database changed!')
-  console.log(type) // Event type is either insert, update or delete
+  console.log(type) // Event type is either find, insert, update or delete
   console.log(name) // Name of collection
   console.log(doc)  // The new document data
 })
 
 // Add an 'x' in front to also emit events
-await db.project.xfind()
-await db.project.xget()
-await db.project.xinsert()
-await db.project.xupdate()
-await db.project.xdelete()
+await db.project.xfind()    // Emits 'find' event
+await db.project.xfirst()   // Emits 'find' event
+await db.project.xinsert()  // Emits 'insert' event
+await db.project.xupdate()  // Emits 'update' event
+await db.project.xdelete()  // Emits 'delete' event
 ```
 The connections are automatically pooled and re-used if possible. Enjoy!
