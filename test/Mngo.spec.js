@@ -43,11 +43,11 @@ describe('Mongo', () => {
     let project = await $db.project.insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
-    project = await $db.project.findOne({ name: 'baner' })
+    project = await $db.project.get({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
     project = await $db.project.delete({ name: 'baner' })
-    project = await $db.project.findOne({ name: 'baner' })
+    project = await $db.project.get({ name: 'baner' })
     expect(project).toBeNull()
     $db.setDatabase('mngo')
   })
@@ -63,7 +63,7 @@ describe('Mongo', () => {
     expect(project._id).toBeDefined()
     project = await c.delete({ name: 'baner' })
     expect(project._id).toBeDefined()
-    project = await c.findOne({ name: 'baner' })
+    project = await c.get({ name: 'baner' })
     expect(project).toBeNull()
   })
 
@@ -104,7 +104,7 @@ describe('Mongo', () => {
 
   it('should find an object', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.findOne({ name: 'baner' })
+    project = await $db.project.get({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
   })

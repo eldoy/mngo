@@ -11,6 +11,7 @@ Any changes returns the full document. You can change the database name for a co
 
 const mongo = require('mngo')
 
+// Returns a Connection object
 const db = await mongo.connect(
   {
     url: 'mongodb://localhost:27017',
@@ -37,10 +38,10 @@ await db.project.insert({ name: 'hello' }, {}) // Last parameter is native mongo
 // Update
 await db.project.update({ name: 'hello' }, { name: 'newname' })
 
-// Find one
-await db.project.findOne({ name: 'hello' })
+// Find one, returns an single object or null
+await db.project.get({ name: 'hello' })
 
-// Find many
+// Find many returns an array
 await db.project.find({ name: 'hello' })
 
 // Delete
@@ -58,6 +59,9 @@ db.isConnected
 
 // Native mongodb client
 db.client
+
+// Native mongodb database
+db.database
 
 // Register events
 db.on('change', (type, name, doc) => {
