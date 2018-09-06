@@ -5,13 +5,12 @@ let $db, action, model, data
 beforeAll(async () => {
   $db = await mongo.connect()
   $db.on('change', (a, m, d) => {
-    action = a
-    model = m
-    data = d
+    [ action, model, data ] = [ a, m, d]
   })
 })
 
 beforeEach(async () => {
+  action, model, data = undefined
   for (const d of ['mngotest', 'mngo']) {
     $db.setDatabase(d)
     let projects = await $db.project.find()
@@ -119,7 +118,7 @@ describe('Mongo', () => {
   })
 
   it('should support insert events', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
+    let project = await $db.project.einsert({ name: 'baner' })
     expect(action).toEqual('insert')
     expect(model).toEqual('project')
     expect(data.name).toEqual('baner')
@@ -127,7 +126,7 @@ describe('Mongo', () => {
 
   it('should support update events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.update(
+    project = await $db.project.eupdate(
       { _id: project._id }, { name: 'update' }
     )
     expect(action).toEqual('update')
@@ -137,7 +136,7 @@ describe('Mongo', () => {
 
   it('should support delete events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.delete({ _id: project._id })
+    project = await $db.project.edelete({ _id: project._id })
     expect(action).toEqual('delete')
     expect(model).toEqual('project')
     expect(data.name).toEqual('baner')
@@ -145,9 +144,17 @@ describe('Mongo', () => {
 
   it('should support get events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.get({ _id: project._id })
+    project = await $db.project.eget({ _id: project._id })
     expect(action).toEqual('get')
     expect(model).toEqual('project')
     expect(data.name).toEqual('baner')
+  })
+
+  it('should support find events', async () => {
+    let project = await $db.project.insert({ name: 'baner' })
+    project = await $db.project.efind()
+    expect(action).toEqual('find')
+    expect(model).toEqual('project')
+    expect(data[0].name).toEqual('baner')
   })
 })
