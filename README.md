@@ -69,11 +69,11 @@ mongo.on('change', (db, type, name, doc) => {
   console.log(doc)  // The new document data
 })
 
-// Add an 'x' in front to also emit events
-await db.project.xfind()    // Emits 'find' event
-await db.project.xfirst()   // Emits 'find' event
-await db.project.xinsert()  // Emits 'insert' event
-await db.project.xupdate()  // Emits 'update' event
-await db.project.xdelete()  // Emits 'delete' event
+// Add '$' in front to also emit events
+await db.project.$find()    // Emits 'find' event
+await db.project.$first()   // Emits 'find' event
+await db.project.$insert()  // Emits 'insert' event
+await db.project.$update()  // Emits 'update' event
+await db.project.$delete()  // Emits 'delete' event
 ```
 The connections are automatically pooled and re-used if possible. Enjoy!

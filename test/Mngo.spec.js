@@ -118,7 +118,7 @@ describe('Mongo', () => {
   })
 
   it('should support insert events', async () => {
-    let project = await $db.project.xinsert({ name: 'baner' })
+    let project = await $db.project.$insert({ name: 'baner' })
     expect(database).toEqual('mngo')
     expect(action).toEqual('insert')
     expect(model).toEqual('project')
@@ -127,7 +127,7 @@ describe('Mongo', () => {
 
   it('should support update events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.xupdate(
+    project = await $db.project.$update(
       { _id: project._id }, { name: 'update' }
     )
     expect(database).toEqual('mngo')
@@ -138,7 +138,7 @@ describe('Mongo', () => {
 
   it('should support delete events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.xdelete({ _id: project._id })
+    project = await $db.project.$delete({ _id: project._id })
     expect(database).toEqual('mngo')
     expect(action).toEqual('delete')
     expect(model).toEqual('project')
@@ -147,7 +147,7 @@ describe('Mongo', () => {
 
   it('should support find first events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.xfirst({ _id: project._id })
+    project = await $db.project.$first({ _id: project._id })
     expect(database).toEqual('mngo')
     expect(action).toEqual('find')
     expect(model).toEqual('project')
@@ -156,7 +156,7 @@ describe('Mongo', () => {
 
   it('should support find events', async () => {
     let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.xfind()
+    project = await $db.project.$find()
     expect(database).toEqual('mngo')
     expect(action).toEqual('find')
     expect(model).toEqual('project')
