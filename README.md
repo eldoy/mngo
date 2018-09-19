@@ -1,6 +1,8 @@
 # MNGO Evented MongoDB database client
 A thin layer on top of the native mongodb driver with support for events. Updates, inserts and deletes can be subsribed to for use with web sockets. API and connection handling is simplified using proxies so you get dot-notation for your collections.
 
+The client retries connection if the database server is not ready, which is perfect in container environments. You'll love Mngo if you're using docker or rkt.
+
 Any changes returns the full document. You can change the database name for a connection or a single collection transaction on the fly which is great for multi-database environments. MIT licensed.
 
 ### INSTALL

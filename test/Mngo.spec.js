@@ -2,6 +2,8 @@ const mongo = require('../index.js')
 const { ObjectId } = require('mongodb')
 let $db, action, model, data
 
+jest.setTimeout(10000)
+
 beforeAll(async () => {
   $db = await mongo.connect()
   mongo.on('change', (db, a, m, d) => {
