@@ -6,10 +6,14 @@
   "directories": {
     "test": "test"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/fugroup/mngo.git"
+  },
   "scripts": {
     "test": "jest --watch"
   },
-  "author": "Vidar",
+  "author": "fugroup <vidar@fugroup.net>",
   "license": "MIT",
   "dependencies": {
     "mongodb": "~3.0.8"
