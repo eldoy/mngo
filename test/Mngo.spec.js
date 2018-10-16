@@ -4,25 +4,24 @@ let $db, action, model, data
 
 jest.setTimeout(10000)
 
-beforeAll(async () => {
-  $db = await mongo.connect()
-  mongo.on('change', (db, a, m, d) => {
-    [ database, action, model, data ] = [ db, a, m, d]
-  })
-})
-
-beforeEach(async () => {
-  action, model, data = undefined
-  for (const d of ['mngotest', 'mngo']) {
-    $db.setDatabase(d)
-    let projects = await $db.project.find()
-    for (const p of projects) {
-      await $db.project.delete({ _id: p._id })
-    }
-  }
-})
-
 describe('Mongo', () => {
+  beforeAll(async () => {
+    $db = await mongo.connect()
+    mongo.on('change', (db, a, m, d) => {
+      [ database, action, model, data ] = [ db, a, m, d]
+    })
+  })
+
+  beforeEach(async () => {
+    action, model, data = undefined
+    for (const d of ['mngotest', 'mngo']) {
+      $db.setDatabase(d)
+      let projects = await $db.project.find()
+      for (const p of projects) {
+        await $db.project.delete({ _id: p._id })
+      }
+    }
+  })
 
   /**
   * MONGO

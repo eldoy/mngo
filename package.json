@@ -1,14 +1,14 @@
 {
   "name": "mngo",
-  "version": "0.4.3",
-  "description": "MongoDB lib with support for events",
+  "version": "0.4.4",
+  "description": "MongoDB client with support for events",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/fugroup/mngo.git"
+    "type": "git",
+    "url": "https://github.com/fugroup/mngo.git"
   },
   "scripts": {
     "test": "jest --watch"
@@ -16,12 +16,17 @@
   "author": "fugroup <vidar@fugroup.net>",
   "license": "MIT",
   "dependencies": {
-    "mongodb": "~3.0.8"
+    "mongodb": "^3.1.8"
   },
   "devDependencies": {
-    "jest": "~22.4.3"
+    "jest": "^23.6.0"
   },
-  "jest": {
-    "testURL": "http://localhost/"
-  }
+  "keywords": [
+    "mongodb",
+    "node",
+    "event",
+    "easy",
+    "promises",
+    "client"
+  ]
 }
