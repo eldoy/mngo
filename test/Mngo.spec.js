@@ -16,9 +16,9 @@ describe('Mongo', () => {
     action, model, data = undefined
     for (const d of ['mngotest', 'mngo']) {
       $db.setDatabase(d)
-      let projects = await $db.project.find()
+      let projects = await $db.get('project').find()
       for (const p of projects) {
-        await $db.project.delete({ _id: p._id })
+        await $db.get('project').delete({ _id: p._id })
       }
     }
   })
@@ -40,25 +40,23 @@ describe('Mongo', () => {
 
   it('should change databases on connection', async () => {
     $db.setDatabase('mngotest')
-    let project = await $db.project.insert({ name: 'baner' })
+    let project = await $db.get('project').insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
-    project = await $db.project.first({ name: 'baner' })
+    project = await $db.get('project').first({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
-    project = await $db.project.delete({ name: 'baner' })
-    project = await $db.project.first({ name: 'baner' })
+    project = await $db.get('project').delete({ name: 'baner' })
+    project = await $db.get('project').first({ name: 'baner' })
     expect(project).toBeNull()
     $db.setDatabase('mngo')
   })
 
   it('should change databases per collection', async () => {
-    let project = await $db.collection('project').insert({ name: 'baner' })
+    let project = await $db.get('project').insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
-    let c = $db.collection('project', {
-      db: 'mngotest'
-    })
+    let c = $db.get('project', { db: 'mngotest' })
     project = await c.insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     project = await c.delete({ name: 'baner' })
@@ -68,24 +66,24 @@ describe('Mongo', () => {
   })
 
   it('should insert an object', async () => {
-    const project = await $db.project.insert({ name: 'baner' })
+    const project = await $db.get('project').insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
   })
 
   it('should insert an object', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
+    let project = await $db.get('project').insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
 
-    project = await $db.project.update(
+    project = await $db.get('project').update(
       { _id: project._id }, { name: 'update' }
     )
 
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('update')
 
-    project = await $db.project.update(
+    project = await $db.get('project').update(
       { _id: project._id }, {}
     )
     expect(project._id).toBeDefined()
@@ -93,33 +91,33 @@ describe('Mongo', () => {
   })
 
   it('should delete an object', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
+    let project = await $db.get('project').insert({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
 
-    project = await $db.project.delete({ name: 'baner' })
+    project = await $db.get('project').delete({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
   })
 
   it('should find an object', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.first({ name: 'baner' })
+    let project = await $db.get('project').insert({ name: 'baner' })
+    project = await $db.get('project').first({ name: 'baner' })
     expect(project._id).toBeDefined()
     expect(project.name).toEqual('baner')
   })
 
   it('should find objects', async () => {
-    await $db.project.insert({ name: 'baner1' })
-    await $db.project.insert({ name: 'baner2' })
-    const projects = await $db.project.find({})
+    await $db.get('project').insert({ name: 'baner1' })
+    await $db.get('project').insert({ name: 'baner2' })
+    const projects = await $db.get('project').find({})
     expect(projects.length).toEqual(2)
     expect(projects[0].name).toEqual('baner1')
     expect(projects[1].name).toEqual('baner2')
   })
 
   it('should support insert events', async () => {
-    let project = await $db.project.$insert({ name: 'baner' })
+    let project = await $db.get('project').$insert({ name: 'baner' })
     expect(database).toEqual('mngo')
     expect(action).toEqual('insert')
     expect(model).toEqual('project')
@@ -127,8 +125,8 @@ describe('Mongo', () => {
   })
 
   it('should support update events', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.$update(
+    let project = await $db.get('project').insert({ name: 'baner' })
+    project = await $db.get('project').$update(
       { _id: project._id }, { name: 'update' }
     )
     expect(database).toEqual('mngo')
@@ -138,8 +136,8 @@ describe('Mongo', () => {
   })
 
   it('should support delete events', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.$delete({ _id: project._id })
+    let project = await $db.get('project').insert({ name: 'baner' })
+    project = await $db.get('project').$delete({ _id: project._id })
     expect(database).toEqual('mngo')
     expect(action).toEqual('delete')
     expect(model).toEqual('project')
@@ -147,8 +145,8 @@ describe('Mongo', () => {
   })
 
   it('should support find first events', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.$first({ _id: project._id })
+    let project = await $db.get('project').insert({ name: 'baner' })
+    project = await $db.get('project').$first({ _id: project._id })
     expect(database).toEqual('mngo')
     expect(action).toEqual('find')
     expect(model).toEqual('project')
@@ -156,8 +154,8 @@ describe('Mongo', () => {
   })
 
   it('should support find events', async () => {
-    let project = await $db.project.insert({ name: 'baner' })
-    project = await $db.project.$find()
+    let project = await $db.get('project').insert({ name: 'baner' })
+    project = await $db.get('project').$find()
     expect(database).toEqual('mngo')
     expect(action).toEqual('find')
     expect(model).toEqual('project')

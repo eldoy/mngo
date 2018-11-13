@@ -18,14 +18,7 @@ class Mongo extends Events {
         })
       }
     }
-    return new Proxy(connection, {
-      get: function (obj, prop) {
-        if (!(prop in obj)) {
-          return obj.collection(prop)
-        }
-        return obj[prop]
-      }
-    })
+    return connection
   }
 }
 
