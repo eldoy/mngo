@@ -24,7 +24,7 @@ const db = await mongo.connect(
   }
 )
 
-// Collection, by proxy or function
+// Get collection
 const projectCollection = db.get('project')
 
 // Collection with options
