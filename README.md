@@ -25,38 +25,38 @@ const db = await mongo.connect(
 )
 
 // Get collection
-const projectCollection = db.get('project')
+const projectCollection = db('project')
 
 // Collection with options
-const projectCollection = db.get('project', {
+const projectCollection = db('project', {
   db: 'name' // Db name only for this collection
 })
 
 // Insert
-await db.get('project').insert({ name: 'hello' })
-await db.get('project').insert({ name: 'hello' }, {}) // Last parameter is native mongodb options
+await db('project').insert({ name: 'hello' })
+await db('project').insert({ name: 'hello' }, {}) // Last parameter is native mongodb options
 
 // Update
-await db.get('project').update({ name: 'hello' }, { name: 'newname' })
+await db('project').update({ name: 'hello' }, { name: 'newname' })
 
 // Find first match, returns an single object or null
-await db.get('project').first({ name: 'hello' })
+await db('project').first({ name: 'hello' })
 
 // Find many returns an array
-await db.get('project').find({ name: 'hello' })
+await db('project').find({ name: 'hello' })
 
 // Delete
-await db.get('project').delete({ name: 'hello' })
+await db('project').delete({ name: 'hello' })
 
 // Object ID
 db.id()          // Returns new object id
 db.id(string_id) // Returns mongodb id string as object
 
 // Change database on the same connection
-db.setDatabase('name')
+db.database('name')
 
 // Check connection status
-db.isConnected
+db.connected()
 
 // Native mongodb client
 db.client
@@ -71,10 +71,10 @@ mongo.on('change', (db, type, name, doc) => {
 })
 
 // Add '$' in front to also emit events
-await db.get('project').$find()    // Emits 'find' event
-await db.get('project').$first()   // Emits 'find' event
-await db.get('project').$insert()  // Emits 'insert' event
-await db.get('project').$update()  // Emits 'update' event
-await db.get('project').$delete()  // Emits 'delete' event
+await db('project').$find()    // Emits 'find' event
+await db('project').$first()   // Emits 'find' event
+await db('project').$insert()  // Emits 'insert' event
+await db('project').$update()  // Emits 'update' event
+await db('project').$delete()  // Emits 'delete' event
 ```
 The connections are automatically pooled and re-used if possible. Enjoy!

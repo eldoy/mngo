@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb')
 const Events = require('events')
 const Connection = require('./lib/connection.js')
 
@@ -8,17 +9,29 @@ class Mongo extends Events {
 
   // Connect to db
   async connect (config = {}, options = {}) {
-    const connection = new Connection(this, config, options)
-    while (!connection.isConnected) {
+    const c = new Connection(this, config, options)
+    const db = function (name, options) {
+      return c.collection(name, options)
+    }
+    db.database = function (name) {
+      c.config.name = name
+    }
+    db.id = function (_id) {
+      try { return ObjectId(_id) } catch (e) { return ObjectId() }
+    }
+    db.connected = function () {
+      return c.client && c.client.isConnected()
+    }
+    while (!db.connected()) {
       try {
-        await connection.init()
+        await c.init()
       } catch (e) {
         await new Promise((resolve) => {
           setTimeout(() => { resolve() }, 1000)
         })
       }
     }
-    return connection
+    return db
   }
 }
 
