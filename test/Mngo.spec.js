@@ -38,6 +38,10 @@ describe('Mongo', () => {
     expect(id.toString()).toEqual(t)
   })
 
+  it('should have access to native client', () => {
+    expect($db.client).toBeDefined()
+  })
+
   it('should change databases on connection', async () => {
     $db.database('mngotest')
     let project = await $db('project').insert({ name: 'baner' })
