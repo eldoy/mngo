@@ -152,7 +152,7 @@ describe('Mongo', () => {
     let project = await $db('project').insert({ name: 'baner' })
     project = await $db('project').$first({ _id: project._id })
     expect(database).toEqual('mngo')
-    expect(action).toEqual('find')
+    expect(action).toEqual('first')
     expect(model).toEqual('project')
     expect(data.name).toEqual('baner')
   })

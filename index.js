@@ -27,8 +27,8 @@ class Mongo extends Events {
         await c.init()
         db.client = c.client
       } catch (e) {
-        await new Promise((resolve) => {
-          setTimeout(() => { resolve() }, 1000)
+        await new Promise(resolve => {
+          setTimeout(() => { resolve() }, 100)
         })
       }
     }

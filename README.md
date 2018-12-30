@@ -34,7 +34,7 @@ const projectCollection = db('project', {
 
 // Insert
 await db('project').insert({ name: 'hello' })
-await db('project').insert({ name: 'hello' }, {}) // Last parameter is native mongodb options
+await db('project').insert({ name: 'hello' }, {}) // Last parameter are native mongodb options
 
 // Update
 await db('project').update({ name: 'hello' }, { name: 'newname' })
@@ -62,19 +62,19 @@ db.connected()
 db.client
 
 // Register events
-mongo.on('change', (db, type, name, doc) => {
+mongo.on('change', (db, type, name, data) => {
   console.log('Database changed!')
   console.log(db)   // Name of database
-  console.log(type) // Event type is either find, insert, update or delete
+  console.log(type) // Type is first, find, insert, update or delete
   console.log(name) // Name of collection
-  console.log(doc)  // The new document data
+  console.log(data  // The data
 })
 
-// Add '$' in front to also emit events
-await db('project').$find()    // Emits 'find' event
-await db('project').$first()   // Emits 'find' event
-await db('project').$insert()  // Emits 'insert' event
-await db('project').$update()  // Emits 'update' event
-await db('project').$delete()  // Emits 'delete' event
+// Add '$' in front to also emit change events
+await db('project').$find()
+await db('project').$first()
+await db('project').$insert()
+await db('project').$update()
+await db('project').$delete()
 ```
 The connections are automatically pooled and re-used if possible. Enjoy!
